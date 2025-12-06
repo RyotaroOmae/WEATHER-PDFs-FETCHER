@@ -1,0 +1,43 @@
+fetch_evince_pdf.py README
+=========================
+
+概要
+----
+HBC「プロ天気」ページから .pdf リンクを収集してダウンロードし、1つのPDFに結合して保存、最後に evince で開きます。:contentReference[oaicite:0]{index=0}
+
+必要環境
+--------
+- Python 3
+- Ubuntu/Debian系の場合: evince（pipでは入らない）
+  sudo apt update
+  sudo apt install evince
+
+Python依存パッケージ
+-------------------
+venv内で:
+  python -m pip install requests beautifulsoup4 PyPDF2
+
+使い方
+------
+  python fetch_evince_pdf.py
+
+動作
+----
+1) https://www.hbc.co.jp/weather/pro-weather.html から .pdf へのリンクを抽出
+2) pdfs_temp/ に document_0.pdf, document_1.pdf, ... として保存（元PDFは残ります）
+3) ダウンロード順に結合し、下記へ保存:
+   /mnt/c/Users/omary/OneDrive - 国立大学法人東北大学/Laboratory_msodrive/weathermap/
+   例: YYMMDD_HHMM_mergedmap.pdf
+4) weathermap/（相対パス）へコピーして evince で開く
+
+出力
+----
+- pdfs_temp/            : 取得した個別PDF
+- .../weathermap/*.pdf  : 結合後PDF（本保存先）
+- weathermap/           : 表示用コピー（evinceで開く対象）
+
+注意
+----
+- 結合後PDFは pdfs_temp/ ではなく directory_name に出力されます。
+- WSL等でGUIがないと evince が起動できない場合があります。
+
